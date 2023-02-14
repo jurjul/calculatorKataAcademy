@@ -1,25 +1,30 @@
+import java.util.Scanner;
+
 public class Main {
 
-    public static String calculator (String userStr) throws MyException {
+    public static String calculator () throws MyException {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Enter your string: ");
+        String userStr = sc.nextLine();
+
         String[] userArr = userStr.split(" ");
+        if (userArr.length != 3)
+            throw new MyException("Incorrect insert");
+
         String operator = operatorCheck(userArr[1]);
 
         int arabNum1 = toArabian(userArr[0]);
         int arabNum2 = toArabian(userArr[2]);
 
         if ((arabNum1 != 0) && (arabNum2 != 0)) {
-            return "" + toRoman(count(arabNum1, arabNum2, operator));
+            if (count(arabNum1, arabNum2, operator) > 0)
+                return toRoman(count(arabNum1, arabNum2, operator));
+            else throw new MyException("Rome result should be positive");
         };
-
 
         int num1 = numCheck(userArr[0]);
         int num2 = numCheck(userArr[2]);
-
-
-        System.out.println("num1 = " + num1);
-        System.out.println("num2 = " + num2);
-        System.out.println("operator = " + "_" + operator + "_");
-        System.out.println();
 
         return "" + count(num1, num2, operator);
     };
@@ -101,10 +106,8 @@ public class Main {
 
 
     public static void main(String[] args) throws MyException {
-        String test = "IX * VII";
-//        String tet = "7 / 5";
 
-        System.out.println(calculator(test));
+        System.out.println(calculator());
 
     }
 }
